@@ -1,0 +1,39 @@
+class CurrencyConverter {
+    // class variable: conversion rates
+    // You can add more conversion rates for different currencies if needed
+    static double CAD_TO_USD = 0.760185;
+    static double USD_TO_CAD = 1 / CAD_TO_USD;
+
+    // method to convert currency
+    public static double convertCurrency(double starterAmount, String starterCurrency, String targetCurrency) {
+        // Check if the conversion is between the same currencies
+        if (starterCurrency.equalsIgnoreCase(targetCurrency)) {
+            return starterAmount;
+        }
+
+        // Convert from starterCurrency to targetCurrency
+        double convertedAmount = 0.0;
+        if (starterCurrency.equalsIgnoreCase("CAD") && targetCurrency.equalsIgnoreCase("USD")) {
+            convertedAmount = starterAmount * CAD_TO_USD;
+        } else if (starterCurrency.equalsIgnoreCase("USD") && targetCurrency.equalsIgnoreCase("CAD")) {
+            convertedAmount = starterAmount * USD_TO_CAD;
+        } else {
+            System.out.println("Unsupported currency conversion: " + starterCurrency + " to " + targetCurrency);
+        }
+
+        return convertedAmount;
+    }
+}
+
+public class CurrencyConverterApp {
+    public static void main(String[] args) {
+        // Example usage
+        double amountInCAD = 100;
+        String fromCurrency = "CAD";
+        String toCurrency = "USD";
+
+        double convertedAmount = CurrencyConverter.convertCurrency(amountInCAD, fromCurrency, toCurrency);
+
+        System.out.println(amountInCAD + " " + fromCurrency + " is equal to " + convertedAmount + " " + toCurrency);
+    }
+}
