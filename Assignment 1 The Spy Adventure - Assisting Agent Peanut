@@ -1,0 +1,99 @@
+public class Main {
+    public static void main(String[] args) {
+        // Exercise 1: The Secret Entrance
+        findCode();
+
+        // Exercise 2: Laser Hallway
+        int[][] hallway = {
+                {0, 0, 1, 0},
+                {1, 0, 1, 1},
+                {0, 0, 0, 0},
+                {1, 1, 1, 0}
+        };
+        navigateHallway(hallway);
+
+        // Exercise 3: Safe Crack
+        crackSafe();
+    }
+
+    // Exercise 1: The Secret Entrance
+    public static void findCode() {
+        for (int i = 1; i < 10; i++) {
+            for (int j = 1; j < 10; j++) {
+                for (int k = 1; k < 10; k++) {
+                    for (int l = 1; l < 10; l++) {
+                        if (i != j && i != k && i != l && j != k && j != l && k != l) {
+                            if (i * j * k * l == 24) {
+                                System.out.println("Exercise 1: The code is: " + i + j + k + l);
+                                return; // Stop immediately once a valid code is found
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Exercise 2: Laser Hallway
+    public static void navigateHallway(int[][] hallway) {
+        int[][] path = new int[hallway.length][hallway[0].length];
+        if (findPath(hallway, 0, 0, path)) {
+            System.out.println("Exercise 2: Found a path!");
+            printPath(path);
+        } else {
+            System.out.println("Exercise 2: No path found.");
+        }
+    }
+
+    private static boolean findPath(int[][] hallway, int row, int col, int[][] path) {
+        if (row == hallway.length - 1 && col == hallway[0].length - 1) {
+            path[row][col] = 1;
+            return true;
+        }
+
+        if (isSafe(hallway, row, col)) {
+            path[row][col] = 1;
+
+            if (findPath(hallway, row + 1, col, path)) {
+                return true;
+            }
+
+            if (findPath(hallway, row, col + 1, path)) {
+                return true;
+            }
+
+            path[row][col] = 0; // Backtrack if no path found
+        }
+
+        return false;
+    }
+
+    private static boolean isSafe(int[][] hallway, int row, int col) {
+        return row >= 0 && row < hallway.length && col >= 0 && col < hallway[0].length && hallway[row][col] == 0;
+    }
+
+    private static void printPath(int[][] path) {
+        for (int[] row : path) {
+            for (int col : row) {
+                System.out.print(col + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    // Exercise 3: Safe Crack
+    public static void crackSafe() {
+        for (int i = 0; i <= 99; i++) {
+            for (int j = 0; j <= 99; j++) {
+                int k = i + j;
+                int l = k + j;
+
+                if (l <= 99 && l == i) {
+                    System.out.println("Exercise 3: Found the three numbers: " + i + ", " + j + ", " + k);
+                    return; // Stop immediately once a valid combination is found
+                }
+            }
+        }
+        System.out.println("Exercise 3: No valid combination found.");
+    }
+}
